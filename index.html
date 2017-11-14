@@ -1,0 +1,111 @@
+<!doctype HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+        img:hover{
+            width:150px;
+            opacity: 0.2;
+        }
+        input{
+            width:150px;
+        }
+        div{
+            background-color:powderblue;
+            width:300px;
+        }
+  
+    </style>
+    <script>
+        var p1=30, wp1=31;
+        var p2=19, wp2=20;
+        var p3=50, wp3=51;
+        var taxRate = 0.0875;
+        function prices(){
+            document.getElementById("local1").innerHTML="$ "+p1;
+            document.getElementById("local2").innerHTML="$ "+p2;
+            document.getElementById("local3").innerHTML="$ "+p3;
+
+        }
+        
+        function ProcessOrder(){
+            var q1=parseInt(document.getElementById("qty1").value);
+            var q2=parseInt(document.getElementById("qty2").value);
+            var q3=parseInt(document.getElementById("qty3").value);
+            var op = document.getElementById("output");
+            var ship =0;
+           
+            var sold = q1+q2+q3;
+            var cust_subtotal=(p1*q1)+(p2*q2)+(p3*q3);
+            var comp_subtotal=(wp1*q1)+(wp2*q2)+(wp3*q3);
+            var profit=cust_subtotal-comp_subtotal;
+            var tax = cust_subtotal * taxRate;
+            
+            if(cust_subtotal<100){
+                ship=20;
+            }else if(cust_subtotal>=100 && cust_subtotal<=200){
+                ship=10;
+            }else{
+                ship=0;
+            }
+        
+            var total = cust_subtotal + tax + ship;
+            
+        var build= "";
+        build += "Total:  $" +cust_subtotal+"<br>";
+        build += "<br>";
+        build += "Tax:"+tax+"<br>";
+        build += "<br>";
+        build += "Shipping: "+ship+"<br>";
+        build += "<br>";
+        build += "Total item sold: "+sold+"<br>";
+        build += "<br>";
+        build += "Customer Sub-total: "+cust_subtotal+"<br>";
+        build += "<br>";
+        build += "Company Sub-total: "+comp_subtotal+"<br>";
+        build += "<br>";
+        build += "Profit/Loss"+profit+"<br>";
+
+
+        op.innerHTML = build;
+        }
+    </script>
+</head>
+<body onload="prices()">
+    <div class+"header">
+    <h1>Michael’s Computer shop</h1>
+    <!--ITEM 1-->
+    <div>
+        <div class = "column">
+        <img src= "laptop2.jpg"><br>
+        <p>Laptop with touchscreen</p><br>
+        <span id="local1"></span>
+        <input type="text" id="qty1" placeholder="Enter #">
+    </div>
+    <hr>
+    <!--ITEM 2-->
+    <div>
+        <div class = "column">
+        <img src="laptop1.jpg"><br>
+        <p>Laptop for basic work</p><br>
+        <span id="local2"></span>
+        <input type="text" id="qty2" placeholder="Enter #">
+    </div>
+    <hr>
+    <!--ITEM 3-->
+    <div>
+        <div class = "column">
+        <img src="laptop3.jpg"><br>
+        <p>Laptop with powerful performance for gaming</p><br>
+        <span id="local3"></span>
+        <input type="text" id="qty3" placeholder="Enter #">
+    
+    </div>
+    <hr>
+    <button onclick="ProcessOrder()"> Process Order </button>
+    
+    <div id="output"></div>
+</body>
+</html>
